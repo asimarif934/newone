@@ -3,6 +3,9 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Navigation from "@/components/Navigation"; // ✅ Import Navigation
+
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Gallery from "./pages/Gallery";
@@ -20,17 +23,19 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/reviews" element={<Reviews />} />
-          <Route path="/like-products" element={<LikeProducts />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/product" element={<Product />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Navigation /> {/* ✅ Always visible at top */}
+        <div className="pt-16"> {/* Push content below fixed nav */}
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/like-products" element={<LikeProducts />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/product" element={<Product />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
