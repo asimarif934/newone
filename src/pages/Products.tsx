@@ -6,6 +6,8 @@ import { Star, Heart, ShoppingCart } from "lucide-react";
 import Navigation from "@/components/Navigation";
 
 const Products = () => {
+  const [activeFilter, setActiveFilter] = useState<string>("all");
+
   const [products] = useState([
     {
       id: 1,
@@ -87,6 +89,18 @@ const Products = () => {
     },
   ]);
 
+  // Filter products based on active filter
+  const filteredProducts = activeFilter === "all" 
+    ? products 
+    : products.filter(product => product.category.toLowerCase() === activeFilter.toLowerCase());
+
+  // Get unique categories for filter buttons
+  const categories = ["all", ...Array.from(new Set(products.map(product => product.category)))];
+
+  const handleFilterClick = (category: string) => {
+    setActiveFilter(category);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Navigation />
@@ -100,10 +114,20 @@ const Products = () => {
             Discover luxury beauty products that elevate your routine with premium quality and innovative formulas
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Badge variant="secondary" className="px-4 py-2 text-sm">All Products</Badge>
-            <Badge variant="outline" className="px-4 py-2 text-sm">Makeup</Badge>
-            <Badge variant="outline" className="px-4 py-2 text-sm">Skincare</Badge>
-            <Badge variant="outline" className="px-4 py-2 text-sm">Tools</Badge>
+            {categories.map((category) => (
+              <Badge
+                key={category}
+                variant={activeFilter.toLowerCase() === category.toLowerCase() ? "secondary" : "outline"}
+                className={`px-4 py-2 text-sm cursor-pointer transition-all duration-300 hover:bg-primary hover:text-primary-foreground ${
+                  activeFilter.toLowerCase() === category.toLowerCase() 
+                    ? "bg-primary text-primary-foreground shadow-lg" 
+                    : "hover:scale-105"
+                }`}
+                onClick={() => handleFilterClick(category)}
+              >
+                {category === "all" ? "All Products" : category}
+              </Badge>
+            ))}
           </div>
         </div>
       </div>
@@ -111,72 +135,83 @@ const Products = () => {
       {/* Products Grid */}
       <div className="px-4 sm:px-6 lg:px-8 pb-16">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-border/50">
-                <CardHeader className="relative pb-4">
-                  <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
-                    />
-                    {product.isNew && (
-                      <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
-                        New
-                      </Badge>
-                    )}
-                    {product.isSale && (
-                      <Badge variant="destructive" className="absolute top-2 right-2">
-                        Sale
-                      </Badge>
-                    )}
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/80 hover:bg-background"
-                    >
-                      <Heart className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  <div className="flex items-center gap-2 mt-2">
-                    <div className="flex items-center gap-1">
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      <span className="text-sm font-medium">{product.rating}</span>
-                    </div>
-                    <span className="text-sm text-muted-foreground">({product.reviews})</span>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <Badge variant="outline" className="mb-2 text-xs">
-                    {product.category}
-                  </Badge>
-                  <CardTitle className="text-lg mb-2 group-hover:text-primary transition-colors duration-300">
-                    {product.name}
-                  </CardTitle>
-                  <CardDescription className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                    {product.description}
-                  </CardDescription>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-2xl font-bold text-foreground">
-                        ${product.price}
-                      </span>
-                      {product.originalPrice > product.price && (
-                        <span className="text-sm text-muted-foreground line-through">
-                          ${product.originalPrice}
-                        </span>
+          {filteredProducts.length === 0 ? (
+            <div className="text-center py-16">
+              <h3 className="text-2xl font-semibold text-muted-foreground mb-4">
+                No products found in this category
+              </h3>
+              <p className="text-muted-foreground">
+                Try selecting a different category or browse all our products.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProducts.map((product) => (
+                <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-border/50">
+                  <CardHeader className="relative pb-4">
+                    <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
+                      />
+                      {product.isNew && (
+                        <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
+                          New
+                        </Badge>
                       )}
+                      {product.isSale && (
+                        <Badge variant="destructive" className="absolute top-2 right-2">
+                          Sale
+                        </Badge>
+                      )}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/80 hover:bg-background"
+                      >
+                        <Heart className="h-4 w-4" />
+                      </Button>
                     </div>
-                    <Button size="sm" className="bg-primary hover:bg-primary/90">
-                      <ShoppingCart className="h-4 w-4 mr-2" />
-                      Add to Cart
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <div className="flex items-center gap-1">
+                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        <span className="text-sm font-medium">{product.rating}</span>
+                      </div>
+                      <span className="text-sm text-muted-foreground">({product.reviews})</span>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Badge variant="outline" className="mb-2 text-xs">
+                      {product.category}
+                    </Badge>
+                    <CardTitle className="text-lg mb-2 group-hover:text-primary transition-colors duration-300">
+                      {product.name}
+                    </CardTitle>
+                    <CardDescription className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                      {product.description}
+                    </CardDescription>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl font-bold text-foreground">
+                          ${product.price}
+                        </span>
+                        {product.originalPrice > product.price && (
+                          <span className="text-sm text-muted-foreground line-through">
+                            ${product.originalPrice}
+                          </span>
+                        )}
+                      </div>
+                      <Button size="sm" className="bg-primary hover:bg-primary/90">
+                        <ShoppingCart className="h-4 w-4 mr-2" />
+                        Add to Cart
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
