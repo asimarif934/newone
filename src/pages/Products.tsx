@@ -1,101 +1,31 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star, Heart, ShoppingCart } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import { products, Product } from "@/data/products";
 
 const Products = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
+  const [wishlist, setWishlist] = useState<number[]>([]);
 
-  const [products] = useState([
-    {
-      id: 1,
-      name: "Luxury Foundation",
-      description: "Premium foundation with long-lasting coverage and natural finish",
-      price: 89.99,
-      originalPrice: 129.99,
-      rating: 4.8,
-      reviews: 1247,
-      image: "/placeholder.svg",
-      category: "Makeup",
-      isNew: true,
-      isSale: true,
-    },
-    {
-      id: 2,
-      name: "Anti-Aging Serum",
-      description: "Advanced formula targeting fine lines and wrinkles",
-      price: 149.99,
-      originalPrice: 199.99,
-      rating: 4.9,
-      reviews: 892,
-      image: "/placeholder.svg",
-      category: "Skincare",
-      isNew: false,
-      isSale: true,
-    },
-    {
-      id: 3,
-      name: "Luxury Lipstick Set",
-      description: "Collection of 6 premium matte lipsticks in trending shades",
-      price: 79.99,
-      originalPrice: 99.99,
-      rating: 4.7,
-      reviews: 567,
-      image: "/placeholder.svg",
-      category: "Makeup",
-      isNew: true,
-      isSale: false,
-    },
-    {
-      id: 4,
-      name: "Hydrating Face Mask",
-      description: "Intensive hydration mask with hyaluronic acid",
-      price: 34.99,
-      originalPrice: 49.99,
-      rating: 4.6,
-      reviews: 423,
-      image: "/placeholder.svg",
-      category: "Skincare",
-      isNew: false,
-      isSale: true,
-    },
-    {
-      id: 5,
-      name: "Professional Brush Set",
-      description: "Complete set of 12 professional makeup brushes",
-      price: 129.99,
-      originalPrice: 179.99,
-      rating: 4.8,
-      reviews: 756,
-      image: "/placeholder.svg",
-      category: "Tools",
-      isNew: false,
-      isSale: true,
-    },
-    {
-      id: 6,
-      name: "Vitamin C Brightening Cream",
-      description: "Brightening cream with stable vitamin C and antioxidants",
-      price: 69.99,
-      originalPrice: 89.99,
-      rating: 4.7,
-      reviews: 634,
-      image: "/placeholder.svg",
-      category: "Skincare",
-      isNew: true,
-      isSale: false,
-    },
-  ]);
+  const toggleWishlist = (id: number) => {
+    setWishlist((prev) =>
+      prev.includes(id) ? prev.filter((pid) => pid !== id) : [...prev, id]
+    );
+  };
 
-  // Filter products based on active filter
-  const filteredProducts = activeFilter === "all" 
-    ? products 
-    : products.filter(product => product.category.toLowerCase() === activeFilter.toLowerCase());
+  const filteredProducts =
+    activeFilter === "all"
+      ? products
+      : products.filter(
+          (product) =>
+            product.category.toLowerCase() === activeFilter.toLowerCase()
+        );
 
-  // Get unique categories for filter buttons
-  const categories = ["all", ...Array.from(new Set(products.map(product => product.category)))];
+  const categories = ["all", ...Array.from(new Set(products.map((p) => p.category)))];
 
   const handleFilterClick = (category: string) => {
     setActiveFilter(category);
@@ -119,8 +49,8 @@ const Products = () => {
                 key={category}
                 variant={activeFilter.toLowerCase() === category.toLowerCase() ? "secondary" : "outline"}
                 className={`px-4 py-2 text-sm cursor-pointer transition-all duration-300 hover:bg-primary hover:text-primary-foreground ${
-                  activeFilter.toLowerCase() === category.toLowerCase() 
-                    ? "bg-primary text-primary-foreground shadow-lg" 
+                  activeFilter.toLowerCase() === category.toLowerCase()
+                    ? "bg-primary text-primary-foreground shadow-lg"
                     : "hover:scale-105"
                 }`}
                 onClick={() => handleFilterClick(category)}
@@ -146,70 +76,109 @@ const Products = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProducts.map((product) => (
-                <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-border/50">
-                  <CardHeader className="relative pb-4">
-                    <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
-                      />
-                      {product.isNew && (
-                        <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">
-                          New
+              {filteredProducts.map((product) => {
+                const discount =
+                  product.originalPrice > product.price
+                    ? Math.round(
+                        ((product.originalPrice - product.price) /
+                          product.originalPrice) *
+                          100
+                      )
+                    : null;
+
+                return (
+                  <Link to={`/product/${product.id}`} key={product.id}>
+                    <Card
+                      className="group hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2 border-border/50 rounded-2xl overflow-hidden cursor-pointer"
+                    >
+                      <CardHeader className="relative pb-4">
+                        <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+                          />
+                          {/* Discount Badge */}
+                          {discount && (
+                            <Badge className="absolute top-2 left-2 bg-red-500 text-white shadow-md">
+                              {discount}% OFF
+                            </Badge>
+                          )}
+                          {/* Best Seller / Limited Edition */}
+                          {product.isBestSeller && (
+                            <Badge className="absolute top-2 right-2 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-semibold shadow-md border-0">
+                              Best Seller
+                            </Badge>
+                          )}
+                          {product.isLimitedEdition && (
+                            <Badge className="absolute top-2 right-2 bg-gradient-to-r from-purple-400 to-pink-500 text-white font-semibold shadow-md border-0">
+                              Limited Edition
+                            </Badge>
+                          )}
+                          {/* Wishlist */}
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              toggleWishlist(product.id);
+                            }}
+                            className="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-white/90 flex items-center justify-center transition-all duration-300 hover:scale-110"
+                          >
+                            <Heart
+                              className={`h-5 w-5 ${
+                                wishlist.includes(product.id)
+                                  ? "text-red-500 fill-red-500"
+                                  : "text-gray-700"
+                              }`}
+                            />
+                          </button>
+                        </div>
+                        <div className="flex items-center gap-2 mt-2">
+                          <div className="flex items-center gap-1">
+                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                            <span className="text-sm font-medium">{product.rating}</span>
+                          </div>
+                          <span className="text-sm text-muted-foreground">({product.reviews})</span>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <Badge variant="outline" className="mb-2 text-xs">
+                          {product.category}
                         </Badge>
-                      )}
-                      {product.isSale && (
-                        <Badge variant="destructive" className="absolute top-2 right-2">
-                          Sale
-                        </Badge>
-                      )}
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/80 hover:bg-background"
-                      >
-                        <Heart className="h-4 w-4" />
-                      </Button>
-                    </div>
-                    <div className="flex items-center gap-2 mt-2">
-                      <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">{product.rating}</span>
-                      </div>
-                      <span className="text-sm text-muted-foreground">({product.reviews})</span>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <Badge variant="outline" className="mb-2 text-xs">
-                      {product.category}
-                    </Badge>
-                    <CardTitle className="text-lg mb-2 group-hover:text-primary transition-colors duration-300">
-                      {product.name}
-                    </CardTitle>
-                    <CardDescription className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                      {product.description}
-                    </CardDescription>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-2xl font-bold text-foreground">
-                          ${product.price}
-                        </span>
-                        {product.originalPrice > product.price && (
-                          <span className="text-sm text-muted-foreground line-through">
-                            ${product.originalPrice}
-                          </span>
-                        )}
-                      </div>
-                      <Button size="sm" className="bg-primary hover:bg-primary/90">
-                        <ShoppingCart className="h-4 w-4 mr-2" />
-                        Add to Cart
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                        <CardTitle className="text-lg mb-2 group-hover:text-primary transition-colors duration-300">
+                          {product.name}
+                        </CardTitle>
+                        <CardDescription className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                          {product.description}
+                        </CardDescription>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="text-2xl font-bold text-foreground">
+                              ${product.price}
+                            </span>
+                            {product.originalPrice > product.price && (
+                              <span className="text-sm text-muted-foreground line-through">
+                                ${product.originalPrice}
+                              </span>
+                            )}
+                          </div>
+                          <Button
+                            size="sm"
+                            className="bg-primary hover:bg-primary/90"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                            }}
+                          >
+                            <ShoppingCart className="h-4 w-4 " />
+                          
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>

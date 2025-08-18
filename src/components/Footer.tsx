@@ -37,17 +37,17 @@ const Footer = () => {
     <footer className="bg-card border-t border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6">
             <h3 className="text-2xl font-bold text-luxury">Real Touch Paris</h3>
-            <p className="text-foreground/70 leading-relaxed max-w-md">
+            <p className="text-foreground/70 leading-relaxed max-w-md !mt-3">
               Where luxury meets artistry. Experience the touch of real beauty 
               with our exclusive Parisian collection crafted for the modern woman.
             </p>
             
             {/* Contact Info */}
-            <div className="space-y-3 text-sm text-foreground/60">
+            <div className="space-y-3 text-sm text-foreground/60 !mt-3">
               <div className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-primary" />
                 <span>75001 Paris, France</span>
@@ -63,7 +63,7 @@ const Footer = () => {
             </div>
 
             {/* Social Links */}
-            <div className="flex gap-4">
+            <div className="flex gap-4 !mt-3">
               {socialLinks.map((social) => (
                 <Button
                   key={social.label}
@@ -82,13 +82,13 @@ const Footer = () => {
 
           {/* Shop Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Shop</h4>
-            <ul className="space-y-3">
+            <h4 className="font-semibold text-foreground mb-2">Shop</h4>
+            <ul className="space-y-0">
               {footerLinks.shop.map((link) => (
                 <li key={link.name}>
                   <a 
                     href={link.href} 
-                    className="text-foreground/60 hover:text-primary transition-colors text-sm"
+                    className="text-foreground/60 hover:text-primary transition-colors text-xs"
                   >
                     {link.name}
                   </a>
@@ -99,8 +99,8 @@ const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Company</h4>
-            <ul className="space-y-3">
+            <h4 className="font-semibold text-foreground mb-2">Company</h4>
+            <ul className="space-y-0">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
                   <a 
@@ -116,8 +116,8 @@ const Footer = () => {
 
           {/* Support Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Support</h4>
-            <ul className="space-y-3">
+            <h4 className="font-semibold text-foreground mb-2">Support</h4>
+            <ul className="space-y-0">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
                   <a 
