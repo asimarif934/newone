@@ -164,7 +164,7 @@ max-h-[80vh] flex flex-col">
         {/* Scrollable Content */}
         <div 
           ref={scrollContainerRef}
-          className="flex-1 overflow-y-auto mt-4 mb-4 p-4 sm:p-6 lg:p-8"
+          className="flex-1 overflow-y-auto  p-4 sm:p-6 lg:p-8"
           onScroll={handleScroll}
         >
           {/* Header */}
