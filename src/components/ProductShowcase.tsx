@@ -59,12 +59,13 @@ const ProductShowcase = () => {
               >
                 <div className="rounded-2xl border border-border/50 bg-card text-card-foreground shadow-xl p-4 sm:p-6 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1 cursor-pointer h-full">
                   {/* Image + overlay items */}
-                  <div className="relative aspect-square overflow-hidden rounded-xl bg-muted">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                    />
+                  
+                  <div className="!aspect-[4/5] w-full overflow-hidden rounded-lg">
+  <img
+    src={product.image}
+    alt={product.name}
+    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+  />
 
                     {/* Discount (TOP-LEFT) */}
                     {product.discount && (
