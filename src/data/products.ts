@@ -1,4 +1,5 @@
-// src/data/products.ts
+import blusher from "@/data/blusher.jpg";
+import blusher2 from "@/data/blusher-2.jpg";
 export interface Product {
   id: number;
   name: string;
@@ -22,7 +23,7 @@ export const products: Product[] = [
     originalPrice: 129.99,
     rating: 4.8,
     reviews: 1247,
-    image: "https://images.unsplash.com/photo-1612817159949-d873b7c1f3bb?auto=format&fit=crop&w=600&q=80",
+    image: blusher,
     category: "Makeup",
     isBestSeller: true,
   },
@@ -34,7 +35,7 @@ export const products: Product[] = [
     originalPrice: 199.99,
     rating: 4.9,
     reviews: 892,
-    image: "https://images.unsplash.com/photo-1612817158303-07b44ef2467d?auto=format&fit=crop&w=600&q=80",
+    image: blusher2,
     category: "Skincare",
     isLimitedEdition: true,
   },

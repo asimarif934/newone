@@ -92,7 +92,7 @@ const Products = () => {
                       className="group hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2 border-border/50 rounded-2xl overflow-hidden cursor-pointer"
                     >
                       <CardHeader className="relative pb-4">
-                        <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
+                        <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-muted">
                           <img
                             src={product.image}
                             alt={product.name}

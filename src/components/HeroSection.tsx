@@ -41,8 +41,8 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-4xl mx-auto flex flex-col justify-center min-h-[80vh] sm:min-h-[90vh]">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col justify-center min-h-screen py-20">
+        <div className="max-w-4xl mx-auto">
           {/* Tagline */}
           <div className="flex items-center justify-center mb-6">
             <Sparkles className="w-6 h-6 text-primary mr-2 animate-pulse" />
@@ -53,7 +53,7 @@ const HeroSection = () => {
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-luxury leading-tight">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-luxury leading-tight">
             Beauty isn't applied,
             <br />
             <span className="text-accent italic">it's awakened</span>
@@ -104,10 +104,11 @@ const HeroSection = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="w-px h-12 bg-gradient-to-b from-primary to-transparent"></div>
-        <div className="w-2 h-2 bg-primary rounded-full mx-auto mt-2 animate-bounce"></div>
-      </div>
+      <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+  <div className="w-3 h-5 bg-gradient-to-b from-primary to-transparent"></div>
+  <div className="w-2 h-2 bg-primary rounded-full mt-2 animate-bounce"></div>
+</div>
+
     </section>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -37,6 +37,27 @@ const Product = () => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // ✅ Ensure we always start at the top when landing on (or switching) product pages
+  useLayoutEffect(() => {
+    try {
+      const prev = (window.history as any).scrollRestoration;
+      // Guard against browsers that support this
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      // Restore previous behavior on cleanup
+      return () => {
+        if ("scrollRestoration" in window.history) {
+          window.history.scrollRestoration = prev ?? "auto";
+        }
+      };
+    } catch {
+      // Fallback (older browsers)
+      window.scrollTo(0, 0);
+    }
+  }, [id]);
 
   const productData = products.find((p) => p.id === Number(id));
 
@@ -142,7 +163,7 @@ const Product = () => {
     }));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 relative overflow-x-hidden">
       <Navigation />
 
       {/* Responsive wrapper to prevent overflow */}
@@ -195,7 +216,7 @@ const Product = () => {
             </div>
 
             {/* Thumbnails */}
-            <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-5">
+           {/* <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-5">
               {productImages.map((img, idx) => (
                 <button
                   key={idx}
@@ -208,12 +229,12 @@ const Product = () => {
                 >
                   <img
                     src={img}
-                    alt=""
+                    alt={`Thumbnail ${idx + 1}`}
                     className="object-cover w-full h-full"
                   />
                 </button>
               ))}
-            </div>
+            </div>*/}
           </div>
 
           {/* Right: Info */}
@@ -272,53 +293,50 @@ const Product = () => {
               </span>
             </div>
 
-          {/*  <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed italic bg-card/40 p-4 rounded-xl border border-border/30 !mt-3">
-              {product.description}
-            </p>*/}
-           {/* Main Description Section */}
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 !mt-3 pl-0 pr-0">
-          <h2 className="text-1xl sm:text-3xl font-serif text-foreground mb-3">
-            Product Description
-          </h2>
-          <div
-            className={`bg-card/60 backdrop-blur-sm border border-border/50 rounded-2xl p-3 text-muted-foreground shadow-lg relative transition-all`}
-            style={{
-              maxHeight: isExpanded ? "none" : "160px",
-              overflow: "hidden",
-            }}
-          >
-            {product.description}
-            <p className="mt-4">
-              This product is designed with premium ingredients for maximum
-              comfort, lasting wear, and a luxurious finish. Perfect for any
-              occasion.jhsdfhdsajkfhjdskfhjdsfhds jdshfjdshfdsahfjfds kajdshfkjdshf kjhdskfjhdsf kjdsahfkjdshfk jkhfkjdsfh kjsdhfjdfh
-            </p>
+            {/* Product Description */}
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 !mt-3 pl-0 pr-0">
+              <h2 className="text-xl sm:text-3xl font-serif text-foreground mb-3">
+                Product Description
+              </h2>
+              <div
+                className="bg-card/60 backdrop-blur-sm border border-border/50 rounded-2xl p-3 text-muted-foreground shadow-lg relative transition-all"
+                style={{
+                  maxHeight: isExpanded ? "none" : "160px",
+                  overflow: "hidden",
+                }}
+              >
+                {product.description}
+                <p className="mt-4">
+                  This product is designed with premium ingredients for maximum
+                  comfort, lasting wear, and a luxurious finish. Perfect for any
+                  occasion.
+                </p>
 
-            {!isExpanded && (
-              <div className="absolute bottom-0 right-0 bg-gradient-to-t from-card/90 to-transparent w-full flex justify-end p-2">
-                <Button
-                  variant="ghost"
-                  className="bg-black/70 border border-yellow-500 rounded-full text-primary font-semibold px-2 py-0 text-xs"
-                  onClick={() => setIsExpanded(true)}
-                >
-                  View More
-                </Button>
-              </div>
-            )}
+                {!isExpanded && (
+                  <div className="absolute bottom-0 right-0 bg-gradient-to-t from-card/90 to-transparent w-full flex justify-end p-2">
+                    <Button
+                      variant="ghost"
+                      className="bg-black/70 border border-yellow-500 rounded-full text-primary font-semibold px-2 py-0 text-xs"
+                      onClick={() => setIsExpanded(true)}
+                    >
+                      View More
+                    </Button>
+                  </div>
+                )}
 
-            {isExpanded && (
-              <div className="mt-4 flex justify-end">
-                <Button
-                  variant="ghost"
-                  className="text-primary font-semibold"
-                  onClick={() => setIsExpanded(false)}
-                >
-                  View Less
-                </Button>
+                {isExpanded && (
+                  <div className="mt-4 flex justify-end">
+                    <Button
+                      variant="ghost"
+                      className="text-primary font-semibold"
+                      onClick={() => setIsExpanded(false)}
+                    >
+                      View Less
+                    </Button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
+            </div>
 
             {/* Features */}
             <div className="flex justify-center gap-2 flex-nowrap w-full !mt-3">
@@ -342,63 +360,19 @@ const Product = () => {
             </div>
 
             {/* Actions */}
-            <div className="inline-flex flex-row sm:flex-row gap-4 !mt-3">
+            <div className="flex justify-between items-center !mt-3">
               <Button className="flex-1 bg-transparent border-2 border-primary text-primary 
-                               hover:bg-primary hover:text-primary-foreground text-base sm:text-lg py-3 sm:py-4 rounded-xl shadow-lg transition-all">
-                <ShoppingCart className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />Add to Cart
+                               hover:bg-primary hover:text-primary-foreground text-base sm:text-lg py-3 sm:py-4 rounded-xl shadow-lg transition-all mr-3">
+                <ShoppingCart className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
+                Add to Cart
               </Button>
-              <Button className="flex-1 bg-gradient-to-r from-yellow-400 to-amber-550 to-yellow-600 text-black font-bold text-base sm:text-lg py-3 sm:py-4 
+              <Button className="flex-2 bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 text-black font-bold text-base sm:text-lg py-3 px-6 sm:py-4 
                                rounded-xl shadow-xl hover:scale-110 transition-transform">
                 Buy Now
               </Button>
             </div>
           </div>
         </div>
-
-       {/* {/* Main Description Section 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 mt-16">
-          <h2 className="text-2xl sm:text-3xl font-serif text-foreground mb-6">
-            Product Description
-          </h2>
-          <div
-            className={`bg-card/60 backdrop-blur-sm border border-border/50 rounded-2xl p-6 text-muted-foreground shadow-lg relative transition-all`}
-            style={{
-              maxHeight: isExpanded ? "none" : "160px",
-              overflow: "hidden",
-            }}
-          >
-            {product.description}
-            <p className="mt-4">
-              This product is designed with premium ingredients for maximum
-              comfort, lasting wear, and a luxurious finish. Perfect for any
-              occasion.
-            </p>
-
-            {!isExpanded && (
-              <div className="absolute bottom-0 right-0 bg-gradient-to-t from-card/90 to-transparent w-full flex justify-end p-2">
-                <Button
-                  variant="ghost"
-                  className="bg-black/70 border border-yellow-500 rounded-full text-primary font-semibold px-2 py-0 text-xs"
-                  onClick={() => setIsExpanded(true)}
-                >
-                  View More
-                </Button>
-              </div>
-            )}
-
-            {isExpanded && (
-              <div className="mt-4 flex justify-end">
-                <Button
-                  variant="ghost"
-                  className="text-primary font-semibold"
-                  onClick={() => setIsExpanded(false)}
-                >
-                  View Less
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>*/}
 
         {/* Reviews */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-5">
@@ -464,7 +438,9 @@ const Product = () => {
                 <h3 className="text-sm sm:text-base text-foreground font-semibold group-hover:text-primary transition-colors">
                   {rp.name}
                 </h3>
-                <p className="text-primary font-bold text-sm sm:text-base">{rp.price}</p>
+                <p className="text-primary font-bold text-sm sm:text-base">
+                  {rp.price}
+                </p>
               </div>
             ))}
           </div>

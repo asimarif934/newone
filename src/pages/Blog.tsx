@@ -173,7 +173,7 @@ const Blog = () => {
             {filteredPosts.slice(0, visibleCount).map((post) => (
               <Card
                 key={post.id}
-                className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-[#e09a32]"
+                className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-border/50 "
               >
                 <CardHeader className="relative pb-4">
                   <div className="relative aspect-video overflow-hidden rounded-lg bg-muted">

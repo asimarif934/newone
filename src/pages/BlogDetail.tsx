@@ -213,9 +213,9 @@ const BlogDetail = () => {
 
   return (
     <div
-      className="max-w-4xl my-8 mx-4 md:mx-8 lg:mx-auto px-4 py-8 rounded-lg shadow-sm border"
-      style={{ borderColor: themeColor, borderWidth: "1px" }}
-    >
+  className="max-w-4xl my-8 mx-4 md:mx-8 lg:mx-auto !bg-card px-4 py-8 rounded-lg shadow-sm border"
+  style={{ borderColor: "rgba(107, 114, 128, 0.3)", borderWidth: "1px" }} 
+>
       {/* Blog Title */}
       <h1 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: themeColor }}>
         {blog.title}
