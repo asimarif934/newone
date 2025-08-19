@@ -9,9 +9,8 @@ import Navigation from "@/components/Navigation";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Gallery from "./pages/Gallery";
-import Product from "./pages/Product"; // optional, if you still want single old page
 import Products from "./pages/Products";
-import ProductDetail from "./pages/ProductDetail"; // ✅ details page
+import Product from "./pages/Product"; // ✅ keep only this
 import Reviews from "./pages/Reviews";
 import LikeProducts from "./pages/LikeProducts";
 import Blog from "./pages/Blog";
@@ -38,15 +37,13 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/products/:id" element={<ProductDetail />} /> {/* ✅ details route */}
+            <Route path="/products/:id" element={<Product />} /> {/* ✅ use Product.tsx here */}
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/like-products" element={<LikeProducts />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blogs" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetail />} />
             <Route path="/gallery" element={<Gallery />} />
-            <Route path="/product" element={<Product />} />
-            <Route path="/product/:id" element={<Product />} />
             <Route path="/about" element={<About />} />
             <Route path="/community" element={<Community />} />
             <Route path="/shipping-returns" element={<ShippingReturns />} />
