@@ -54,7 +54,7 @@ const ProductShowcase = () => {
             return (
               <Link 
                 key={product.id} 
-                to={`/product/${product.id}`}
+                to={`/products/${product.id}`}
                 className="block"
               >
                 <div className="rounded-2xl border border-border/50 bg-card text-card-foreground shadow-xl p-4 sm:p-6 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1 cursor-pointer h-full">

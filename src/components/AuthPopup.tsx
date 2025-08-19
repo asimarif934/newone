@@ -146,7 +146,7 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
       />
       
       {/* Popup Container */}
-      <div className="relative bg-card/95 backdrop-blur-md border border-primary/20 rounded-2xl w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto shadow-2xl animate-in fade-in-0 zoom-in-95 duration-300 max-h-[90vh] sm:max-h-[85vh] flex flex-col">
+      <div className="relative bg-card/95 backdrop-blur-md border border-primary/20 rounded-2xl w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto mt-4 mb-4 shadow-2xl animate-in fade-in-0 zoom-in-95 duration-300 max-h-[90vh] sm:max-h-[85vh] flex flex-col">
         {/* Close Button */}
         <Button
           variant="ghost"

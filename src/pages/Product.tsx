@@ -169,7 +169,7 @@ const Product = () => {
       {/* Responsive wrapper to prevent overflow */}
       <div className="w-full max-w-full overflow-x-hidden">
         {/* Header */}
-        <div className="pt-3 pb-5 text-center px-4 sm:px-6">
+        <div className="mt-2 pt-3 pb-3 text-center px-4 sm:px-6">
           <h1 className="text-3xl sm:text-5xl font-serif font-extrabold text-foreground drop-shadow-lg tracking-wide bg-card/60 backdrop-blur-sm inline-block px-4 sm:px-2 py-3 rounded-2xl border border-border/50">
             {product.name}
           </h1>
@@ -410,8 +410,8 @@ const Product = () => {
         </div>
 
         {/* Related */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-14 mb-8">
-          <h2 className="text-2xl sm:text-3xl font-serif text-center text-foreground mb-14 tracking-wide">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-10 mb-8">
+          <h2 className="text-2xl sm:text-3xl font-serif text-center text-foreground mb-10 tracking-wide">
             You Might Also Like
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 sm:gap-8">

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +9,19 @@ import { products, Product } from "@/data/products";
 
 const Products = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Read category from query params on mount and whenever it changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const categoryParam = params.get("category");
+    if (categoryParam) {
+      setActiveFilter(categoryParam);
+    } else {
+      setActiveFilter("all");
+    }
+  }, [location.search]);
   const [wishlist, setWishlist] = useState<number[]>([]);
 
   const toggleWishlist = (id: number) => {
@@ -25,10 +38,20 @@ const Products = () => {
             product.category.toLowerCase() === activeFilter.toLowerCase()
         );
 
-  const categories = ["all", ...Array.from(new Set(products.map((p) => p.category)))];
+  const categories = useMemo(() => [
+    "all",
+    ...Array.from(new Set(products.map((p) => p.category)))
+  ], []);
 
   const handleFilterClick = (category: string) => {
     setActiveFilter(category);
+    const params = new URLSearchParams(location.search);
+    if (category.toLowerCase() === "all") {
+      params.delete("category");
+    } else {
+      params.set("category", category.toLowerCase());
+    }
+    navigate({ pathname: "/products", search: params.toString() ? `?${params.toString()}` : "" }, { replace: false });
   };
 
   return (
@@ -87,7 +110,7 @@ const Products = () => {
                     : null;
 
                 return (
-                  <Link to={`/product/${product.id}`} key={product.id}>
+                  <Link to={`/products/${product.id}`} key={product.id}>
                     <Card
                       className="group hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2 border-border/50 rounded-2xl overflow-hidden cursor-pointer"
                     >

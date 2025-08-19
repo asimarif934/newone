@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Calendar, Clock, User, Heart, Share2 } from "lucide-react";
 import { supabase } from "../supabaseClient"; // ensure correct path
@@ -251,6 +252,34 @@ const BlogDetail = () => {
           <p key={index}>{para}</p>
         ))}
       </div>
+
+      {/* CTA: Explore Category Products */}
+      {(() => {
+        const categoryMap: Record<string, string> = {
+          skincare: "skincare",
+          makeup: "makeup",
+          tools: "tools",
+          science: "science",
+          education: "education",
+          tutorials: "tutorials",
+        };
+        const key = blog.category.toLowerCase();
+        const mapped = categoryMap[key];
+        const href = mapped ? `/products?category=${mapped}` : "/products";
+        return (
+          <div className="mt-10 p-6 border rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+               style={{ borderColor: themeColor }}>
+            <div className="text-lg font-semibold">
+              Explore our <span style={{ color: themeColor }}>{blog.category}</span> products →
+            </div>
+            <Link to={href}>
+              <Button className="bg-[#e09a32] hover:bg-[#c58528] text-black rounded-full px-6 py-2">
+                Browse {blog.category}
+              </Button>
+            </Link>
+          </div>
+        );
+      })()}
 
       {/* Back to Blogs + Like/Share */}
       <div className="flex justify-between items-center mt-8">

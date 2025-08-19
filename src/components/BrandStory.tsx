@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import { Star, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import productsImage from "@/assets/products-showcase.jpg";
 
 const ReviewsGallery = () => {
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+  const navigate = useNavigate();
 
   const reviews = [
     {
@@ -67,12 +69,11 @@ const ReviewsGallery = () => {
   };
 
   const handleViewAllReviews = () => {
-    // TODO: Navigate to dedicated reviews page
-    console.log("Navigate to all reviews page");
+    navigate("/reviews");
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-[#f6b3e6] via-[#d495e7] to-[#b87de9] relative overflow-hidden">
+    <section className="py-20 overflow-hidden bg-gradient-to-b from-yellow-500 via-black/5 to-black">
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-1/4 left-10 w-64 h-64 bg-white/30 rounded-full blur-3xl"></div>
@@ -268,7 +269,7 @@ const ReviewsGallery = () => {
                       </div>
                       
                       {/* Drop Shadow Effect */}
-                      <div className={`absolute inset-0 bg-gradient-to-br from-purple-900/20 to-pink-900/20 rounded-3xl blur-xl transform ${
+                      <div className={`absolute inset-0  rounded-3xl blur-xl transform ${
                         index % 2 === 0 ? 'mr-2 mt-2' : 'ml-2 mt-2'
                       }`}></div>
                     </div>
@@ -313,10 +314,10 @@ const ReviewsGallery = () => {
         <div className="text-center mt-16 pt-16 border-t border-white/20">
           <Button 
             onClick={handleViewAllReviews}
-            className="bg-amber-400 text-amber-900 hover:bg-amber-500 px-8 py-4 rounded-2xl font-semibold transition-all duration-300 group shadow-2xl hover:shadow-[var(--shadow-glow)]"
+            className="bg-amber-400 text-amber-900 hover:bg-yellow-500 px-8 py-4 rounded-2xl font-semibold transition-all duration-300 group shadow-2xl hover:shadow-[var(--shadow-glow)]"
           >
             View All Reviews
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-50" />
           </Button>
         </div>
       </div>

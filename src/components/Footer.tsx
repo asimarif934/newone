@@ -1,4 +1,4 @@
-import { Instagram, Facebook, Twitter, Youtube, MapPin, Phone, Mail } from "lucide-react";
+import { Instagram, Facebook, Twitter, Youtube, MapPin, Phone, Mail, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -13,24 +13,23 @@ const Footer = () => {
     ],
     company: [
       { name: "About Us", href: "/about" },
-      { name: "Our Story", href: "/story" },
-      { name: "Careers", href: "/careers" },
-      { name: "Press", href: "/press" },
-      { name: "Sustainability", href: "/sustainability" }
+      { name: "Reviews", href: "/reviews" },
+      { name: "Our Community", href: "/community" },
+      { name: "Our Products", href: "/products" },
+      { name: "Blogs", href: "/blogs" }
     ],
     support: [
-      { name: "Shipping & Returns", href: "/shipping" },
-      { name: "Size Guide", href: "/guide" },
-      { name: "FAQs", href: "/faq" },
-      { name: "Track Order", href: "/track" }
+      { name: "Shipping & Returns", href: "/shipping-returns" },
+      { name: "Makeup Guide", href: "/makeup-guide" },
+      { name: "FAQs", href: "/faqs" }
     ]
   };
 
   const socialLinks = [
-    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-    { icon: Youtube, href: "https://youtube.com", label: "YouTube" }
+    { icon: Instagram, href: "https://instagram.com/example", label: "Instagram" },
+    { icon: Facebook, href: "https://facebook.com/example", label: "Facebook" },
+    { icon: Twitter, href: "https://twitter.com/example", label: "Twitter" },
+    { icon: Youtube, href: "https://youtube.com/example", label: "YouTube" }
   ];
 
   return (
@@ -54,11 +53,15 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-primary" />
-                <span>+33 1 42 36 54 78</span>
+                <a href="https://wa.me/923411816746" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">+92 341 1816746</a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-primary" />
-                <span>hello@realtouchparis.com</span>
+                <a href="mailto:abbasiasim853@gmail.com" className="hover:text-primary transition-colors">abbasiasim853@gmail.com</a>
+              </div>
+              <div className="flex items-center gap-3">
+                <MessageCircle className="w-4 h-4 text-primary" />
+                <a href="https://wa.me/923411816746" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">WhatsApp</a>
               </div>
             </div>
 
@@ -72,7 +75,7 @@ const Footer = () => {
                   className="hover:text-primary hover:bg-primary/10 transition-colors"
                   asChild
                 >
-                  <a href={social.href} aria-label={social.label}>
+                  <a href={social.href} aria-label={social.label} target="_blank" rel="noopener noreferrer">
                     <social.icon className="w-5 h-5" />
                   </a>
                 </Button>
@@ -80,7 +83,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Shop Links */}
+          {/* Shop Links 
           <div>
             <h4 className="font-semibold text-foreground mb-2">Shop</h4>
             <ul className="space-y-0">
@@ -95,7 +98,7 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div>*/}
 
           {/* Company Links */}
           <div>
@@ -139,13 +142,13 @@ const Footer = () => {
           </div>
           
           <div className="flex gap-6 text-sm">
-            <a href="/privacy" className="text-foreground/60 hover:text-primary transition-colors">
+            <a href="/privacy-policy" className="text-foreground/60 hover:text-primary transition-colors">
               Privacy Policy
             </a>
-            <a href="/terms" className="text-foreground/60 hover:text-primary transition-colors">
+            <a href="/terms-of-service" className="text-foreground/60 hover:text-primary transition-colors">
               Terms of Service
             </a>
-            <a href="/cookies" className="text-foreground/60 hover:text-primary transition-colors">
+            <a href="/cookie-policy" className="text-foreground/60 hover:text-primary transition-colors">
               Cookie Policy
             </a>
           </div>
