@@ -138,7 +138,7 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 safe-area-top safe-area-bottom">
+    <div className="fixed inset-0 z-50 flex items-center justify-center !pt-20 !pb-20 p-8 sm:p-8 safe-area-top safe-area-bottom">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -146,7 +146,7 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
       />
       
       {/* Popup Container */}
-      <div className="relative bg-card/95 backdrop-blur-md  border border-primary/20 rounded-2xl w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto mt-7 mb-7 shadow-2xl animate-in fade-in-0 zoom-in-95 duration-300 max-h-[90vh] sm:max-h-[85vh] flex flex-col">
+      <div className="relative bg-card/95 backdrop-blur-md  border border-primary/20 rounded-2xl w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto mt-10 mb-10 shadow-2xl animate-in fade-in-0 zoom-in-95 duration-300 max-h-[90vh] sm:max-h-[85vh] flex flex-col">
         {/* Close Button */}
         <Button
           variant="ghost"
@@ -341,7 +341,7 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
 
         {/* Scroll Hint Arrow */}
         {showScrollHint && (
-          <div className="absolute bottom-16 sm:bottom-20 left-1/2 transform -translate-x-1/2 z-10">
+          <div className="absolute bottom-10 sm:bottom-20 left-1/2 transform -translate-x-1/2 z-10">
             <div className="bg-primary/20 backdrop-blur-sm rounded-full p-2 animate-bounce">
               <ChevronDown className="w-4 h-4 text-primary" />
             </div>
