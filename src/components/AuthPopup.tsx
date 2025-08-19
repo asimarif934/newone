@@ -344,7 +344,7 @@ max-h-[80vh] flex flex-col">
 
         {/* Scroll Hint Arrow */}
         {showScrollHint && (
-          <div className="absolute bottom-30 sm:bottom-20 left-1/2 transform -translate-x-1/2 z-10">
+          <div className="absolute bottom-22 sm:bottom-20 left-1/2 transform -translate-x-1/2 z-10">
             <div className="bg-primary/20 backdrop-blur-sm rounded-full p-2 animate-bounce">
               <ChevronDown className="w-4 h-4 text-primary" />
             </div>
