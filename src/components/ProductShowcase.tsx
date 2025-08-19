@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, Heart, ShoppingCart } from "lucide-react";
+import { Star, ShoppingCart } from "lucide-react";
 import { products } from "@/data/products";
 
 interface Product {
@@ -20,13 +19,6 @@ interface Product {
 }
 
 const ProductShowcase = () => {
-  const [wishlist, setWishlist] = useState<number[]>([]);
-
-  const toggleWishlist = (id: number) => {
-    setWishlist((prev) =>
-      prev.includes(id) ? prev.filter((pid) => pid !== id) : [...prev, id]
-    );
-  };
 
   // Get the first two products from the centralized products data
   const showcaseProducts: Product[] = products.slice(0, 2).map(product => ({
@@ -81,23 +73,7 @@ const ProductShowcase = () => {
                       </Badge>
                     )}
 
-                    {/* Wishlist Heart (BOTTOM-RIGHT) */}
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        toggleWishlist(product.id);
-                      }}
-                      className="absolute bottom-2 right-2 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur flex items-center justify-center transition-all duration-300 hover:scale-110"
-                    >
-                      <Heart
-                        className={`h-5 w-5 ${
-                          wishlist.includes(product.id)
-                            ? "text-red-500 fill-red-500"
-                            : "text-gray-800"
-                        }`}
-                      />
-                    </button>
+
                   </div>
 
                   {/* Rating row */}
