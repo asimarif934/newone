@@ -188,11 +188,11 @@ const LikeProducts = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="text-2xl font-bold text-foreground">
-                        ${product.price}
+                        Rs. {product.price}
                       </span>
                       {product.originalPrice > product.price && (
                         <span className="text-sm text-muted-foreground line-through">
-                          ${product.originalPrice}
+                          Rs. {product.originalPrice}
                         </span>
                       )}
                     </div>

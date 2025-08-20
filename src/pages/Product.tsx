@@ -92,10 +92,10 @@ const Product = () => {
   const product: Product = {
     id: productData.id,
     name: productData.name,
-    price: `$${productData.price}`,
+    price: `Rs. ${productData.price}`,
     originalPrice:
       productData.originalPrice > productData.price
-        ? `$${productData.originalPrice}`
+        ? `Rs. ${productData.originalPrice}`
         : undefined,
     rating: productData.rating,
     reviews: productData.reviews,
@@ -154,7 +154,7 @@ const Product = () => {
     .map((item) => ({
       id: item.id,
       name: item.name,
-      price: `$${item.price}`,
+      price: `Rs. ${item.price}`,
       image: item.image,
       badge: item.isBestSeller
         ? "Best Seller"
@@ -249,7 +249,7 @@ const Product = () => {
 
             <div className="flex items-center gap-3 sm:gap-4 flex-wrap !mt-3 ml-0">
               <p className="text-3xl sm:text-5xl font-bold text-foreground">
-                ${(Number(productData.price) * quantity).toFixed(2)}
+                Rs. {(Number(productData.price) * quantity).toFixed(2)}
               </p>
               {product.originalPrice && (
                 <p className="text-lg sm:text-2xl text-muted-foreground line-through">

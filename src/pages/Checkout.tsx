@@ -124,8 +124,8 @@ const Checkout = () => {
         
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-luxury mb-4">
-              Checkout - Shipping & Billing
+            <h1 className="text-4xl md:text-5xl font-bold  text-yellow-500 mb-4">
+              Shipping & Billing
             </h1>
             <div className="w-32 h-px bg-gradient-to-r from-transparent via-primary to-transparent mx-auto shimmer"></div>
           </div>
@@ -190,7 +190,7 @@ const Checkout = () => {
                           value={formData.phonePrimary}
                           onChange={(e) => handleInputChange("phonePrimary", e.target.value)}
                           className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20 pl-10"
-                          placeholder="+92 313"
+                          placeholder="+92 31********"
                           required
                         />
                       </div>
@@ -205,57 +205,68 @@ const Checkout = () => {
                           value={formData.phoneSecondary}
                           onChange={(e) => handleInputChange("phoneSecondary", e.target.value)}
                           className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20 pl-10"
-                          placeholder="+92 3411816746"
+                          placeholder="+92 34********"
                         />
                       </div>
                     </div>
                   </div>
 
                   {/* Address */}
-                  <div className="space-y-4">
-                    <Label className="text-foreground/80 flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-primary" />
-                      Shipping Address
-                    </Label>
-                    <div className="space-y-4">
-                      <Input
-                        type="text"
-                        value={formData.street}
-                        onChange={(e) => handleInputChange("street", e.target.value)}
-                        className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20"
-                        placeholder="Street Address"
-                        required
-                      />
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <Input
-                          type="text"
-                          value={formData.city}
-                          onChange={(e) => handleInputChange("city", e.target.value)}
-                          className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20"
-                          placeholder="City"
-                          required
-                        />
-                        <Input
-                          type="text"
-                          value={formData.postalCode}
-                          onChange={(e) => handleInputChange("postalCode", e.target.value)}
-                          className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20"
-                          placeholder="Postal Code"
-                          required
-                        />
-                        <Input
-                          type="text"
-                          value={formData.country}
-                          onChange={(e) => handleInputChange("country", e.target.value)}
-                          className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20"
-                          placeholder="Country"
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
+<div className="space-y-4">
+  <Label className="text-foreground/80 flex items-center gap-2">
+    <MapPin className="w-4 h-4 text-primary" />
+    Shipping Address
+  </Label>
+  <div className="space-y-4">
+    <Input
+      type="text"
+      value={formData.street}
+      onChange={(e) => handleInputChange("street", e.target.value)}
+      className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20"
+      placeholder="Street Address"
+      required
+    />
 
-                  {/* Delivery Info */}
+    {/* Landmark / Nearby Details */}
+    <Input
+      type="text"
+      value={formData.landmark}
+      onChange={(e) => handleInputChange("landmark", e.target.value)}
+      className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20"
+      placeholder="Nearby Landmark (e.g. Shop, Restaurant, House)"
+    />
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <Input
+        type="text"
+        value={formData.city}
+        onChange={(e) => handleInputChange("city", e.target.value)}
+        className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20"
+        placeholder="City"
+        required
+      />
+      <Input
+        type="text"
+        value={formData.postalCode}
+        onChange={(e) => handleInputChange("postalCode", e.target.value)}
+        className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20"
+        placeholder="Postal Code"
+        required
+      />
+      <Input
+        type="text"
+        value={formData.country}
+        onChange={(e) => handleInputChange("country", e.target.value)}
+        className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20"
+        placeholder="Country"
+        required
+      />
+    </div>
+  </div>
+</div>
+
+
+                  {/* Delivery Info 
                   <Card className="bg-muted/30 border-border/30">
                     <CardContent className="pt-6">
                       <div className="flex items-center gap-3 mb-4">
@@ -267,7 +278,7 @@ const Checkout = () => {
                         <p>Delivery within <span className="text-accent font-semibold">2 days</span></p>
                       </div>
                     </CardContent>
-                  </Card>
+                  </Card>*/}
 
                   {/* Coupon Section */}
                   <Card className="bg-muted/30 border-border/30">
@@ -343,6 +354,20 @@ const Checkout = () => {
                     </div>
                   ))}
                 </div>
+
+                                  {/* Delivery Info */}
+                  <Card className="bg-muted/30 border-border/30">
+                    <CardContent className="pt-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <Truck className="w-5 h-5 text-primary" />
+                        <h3 className="font-semibold text-foreground">Delivery Information</h3>
+                      </div>
+                      <div className="space-y-2 text-sm text-foreground/80">
+                        <p>Standard Delivery Charges: <span className="text-primary font-semibold">Rs. 200</span></p>
+                        <p>Delivery within <span className="text-accent font-semibold">2 days</span></p>
+                      </div>
+                    </CardContent>
+                  </Card>
 
                 {/* Price Breakdown */}
                 <div className="space-y-3 border-t border-border/30 pt-4">

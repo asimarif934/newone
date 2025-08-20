@@ -191,10 +191,10 @@ const ProductDetail = () => {
             {/* Price and Rating */}
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <span className="text-4xl font-bold text-foreground">${product.price}</span>
+                <span className="text-4xl font-bold text-foreground">Rs. {product.price}</span>
                 {product.originalPrice > product.price && (
                   <span className="text-xl line-through text-muted-foreground">
-                    ${product.originalPrice}
+                    Rs. {product.originalPrice}
                   </span>
                 )}
               </div>
@@ -245,7 +245,7 @@ const ProductDetail = () => {
                   </button>
                 </div>
                 <span className="text-sm text-muted-foreground">
-                  {quantity} × ${product.price} = ${(quantity * product.price).toFixed(2)}
+                  {quantity} × Rs. {product.price} = Rs. {(quantity * product.price).toFixed(2)}
                 </span>
               </div>
             </div>
@@ -443,11 +443,11 @@ const ProductDetail = () => {
                       </CardTitle>
                       <div className="flex items-center gap-2">
                         <span className="text-xl font-bold text-foreground">
-                          ${item.price}
+                          Rs. {item.price}
                         </span>
                         {item.originalPrice > item.price && (
                           <span className="text-sm text-muted-foreground line-through">
-                            ${item.originalPrice}
+                            Rs. {item.originalPrice}
                           </span>
                         )}
                       </div>

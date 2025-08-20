@@ -50,7 +50,7 @@ const ProductDetailPanel = ({ product, isOpen, onClose }: ProductDetailPanelProp
 
   const handleBuyNow = () => {
     // TODO: Implement checkout logic
-    console.log(`Buying ${product.name} for ${product.price}`);
+    console.log(`Buying ${product.name} for Rs. ${product.price}`);
     onClose();
   };
 
