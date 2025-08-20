@@ -12,7 +12,6 @@ import {
   Leaf,
   Minus,
   Plus,
-  MessageCircle,
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -38,6 +37,7 @@ const Product = () => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showAllReviews, setShowAllReviews] = useState(false);
 
   // ✅ Ensure we always start at the top when landing on (or switching) product pages
   useLayoutEffect(() => {
@@ -180,7 +180,7 @@ const Product = () => {
         </div>
 
         {/* Main Section */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-5 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16">
           {/* Left: Images */}
           <div>
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-border/50 group bg-card">
@@ -218,7 +218,7 @@ const Product = () => {
 
             {/* Thumbnails */}
            {/* <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-5">
-              {productImages.map((img, idx) => (
+              {productImages.map((img, idx) =>
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
@@ -290,7 +290,17 @@ const Product = () => {
                 />
               ))}
               <span className="text-xs sm:text-sm text-muted-foreground">
-                {product.rating} ({product.reviews} reviews)
+                {product.rating}{" "}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const el = document.getElementById("reviews");
+                    el?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="underline-offset-2 hover:underline text-primary cursor-pointer"
+                >
+                  ({product.reviews} reviews)
+                </button>
               </span>
             </div>
 
@@ -360,76 +370,138 @@ const Product = () => {
               </div>
             </div>
 
-            {/* Actions */}
-            <div className="space-y-4 !mt-3">
-              <div className="flex justify-between items-center">
-                <Button className="flex-1 bg-transparent border-2 border-primary text-primary 
-                                 hover:bg-primary hover:text-primary-foreground text-base sm:text-lg py-3 sm:py-4 rounded-xl shadow-lg transition-all mr-3">
-                  <ShoppingCart className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
-                  Add to Cart
-                </Button>
-                <Button 
-                  onClick={() => navigate("/checkout", {
-                    state: {
-                      productId: product.id,
-                      productName: product.name,
-                      productPrice: productData.price,
-                      quantity: quantity
-                    }
-                  })}
-                  className="flex-2 bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 text-black font-bold text-base sm:text-lg py-3 px-6 sm:py-4 
-                                 rounded-xl shadow-xl hover:scale-110 transition-transform"
-                >
-                  Buy Now
-                </Button>
-              </div>
-              
-              {/* WhatsApp Chat Button */}
-              <Button
-                onClick={() => window.open("https://wa.me/1234567890?text=Hi%20I%20need%20help%20regarding%20this%20product", "_blank")}
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold text-base sm:text-lg py-3 sm:py-4 rounded-xl shadow-lg hover:scale-105 transition-all flex items-center justify-center gap-2"
-              >
-                <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-                Chat on WhatsApp
-              </Button>
-            </div>
+{/* Actions */}
+<div className="flex flex-col gap-3 !mt-3">
+  {/* Row: Add to Cart + Buy Now */}
+  <div className="flex items-center gap-3">
+    {/* Add to Cart Button */}
+    <Button className="flex-1 bg-transparent border-2 border-primary text-primary 
+                       hover:bg-primary hover:text-primary-foreground text-base sm:text-lg py-3 sm:py-4 
+                       rounded-xl shadow-lg transition-all">
+      <ShoppingCart className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
+      Add to Cart
+    </Button>
+
+    {/* Buy Now Button (transparent yellow border, hover keeps black text) */}
+    <Button
+      onClick={() =>
+        navigate("/checkout", {
+          state: {
+            productId: productData.id,
+            productName: productData.name,
+            productPrice: productData.price,
+            quantity,
+          },
+        })
+      }
+      className="flex-1 bg-transparent border-2 border-yellow-500 text-yellow-500
+                 hover:bg-yellow-500 hover:text-black text-base sm:text-lg py-3 sm:py-4 px-6
+                 rounded-xl shadow-lg transition-all"
+    >
+      Buy Now
+    </Button>
+  </div>
+
+  {/* WhatsApp Button (same style, hover keeps black text) */}
+  <div>
+    <Button
+      onClick={() => {
+        const message = encodeURIComponent(`Hi, I’m interested in ${product.name}.`);
+        const url = `https://wa.me/923411816746?text=${message}`;
+        window.open(url, "_blank");
+      }}
+      className="w-full bg-transparent border-2 border-yellow-500 text-yellow-500
+                 hover:bg-yellow-500 hover:text-black text-base sm:text-lg py-3 sm:py-4 px-6
+                 rounded-xl shadow-lg transition-all"
+    >
+      WhatsApp
+    </Button>
+  </div>
+</div>
+
           </div>
         </div>
 
-        {/* Reviews */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-5">
-          <h2 className="text-2xl sm:text-3xl font-serif text-center text-foreground mb-10 tracking-wide">
-            Customer Reviews
-          </h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-            {customerReviews.map((review) => (
-              <div
-                key={review.id}
-                className="bg-card/60 backdrop-blur-sm border border-border/50 rounded-2xl p-6 shadow-xl hover:border-primary/40 hover:scale-105 transition-all"
-              >
-                <div className="flex gap-1 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-3 h-3 sm:w-4 sm:h-4 ${
-                        i < review.rating
-                          ? "text-yellow-400 fill-yellow-400"
-                          : "text-muted-foreground"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <p className="text-sm sm:text-base text-muted-foreground mb-4 italic">
-                  "{review.comment}"
-                </p>
-                <div className="flex justify-between text-xs sm:text-sm text-muted-foreground">
-                  <span>{review.customer}</span>
-                  <span>{review.date}</span>
-                </div>
-              </div>
+
+     {/* Reviews Section */}
+<div className="relative max-w-7xl text-center mx-auto my-10 px-4 sm:px-6 lg:px-8">
+  {/* Heading */}
+  <h2 className="text-3xl sm:text-5xl font-serif font-extrabold text-foreground drop-shadow-lg tracking-wide bg-card/60 backdrop-blur-sm inline-block px-4 sm:px-2 py-3 mb-10 rounded-2xl border border-border/50">
+    Customer Reviews
+  </h2>
+
+  {/* Reviews Box */}
+  <div className="relative bg-card/60 backdrop-blur-sm border border-border/50 
+                  rounded-2xl p-6 shadow-xl transition-all">
+    <div
+      className={`grid sm:grid-cols-1 gap-6 overflow-hidden transition-all duration-500 ${
+        showAllReviews ? "max-h-[2000px]" : "max-h-[230px]"
+      }`}
+    >
+      {customerReviews.map((review) => (
+        <div
+          key={review.id}
+          className="bg-background/60 border border-border/40 rounded-xl p-4 shadow-md hover:border-primary/40 transition-all"
+        >
+          <div className="flex gap-1 mb-2">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                className={`w-3 h-3 sm:w-4 sm:h-4 ${
+                  i < review.rating
+                    ? "text-yellow-400 fill-yellow-400"
+                    : "text-muted-foreground"
+                }`}
+              />
             ))}
           </div>
+          <p className="text-sm sm:text-base text-muted-foreground mb-2 italic">
+            "{review.comment}"
+          </p>
+          <div className="flex justify-between text-xs sm:text-sm text-muted-foreground">
+            <span>{review.customer}</span>
+            <span>{review.date}</span>
+          </div>
         </div>
+      ))}
+    </div>
+
+    {/* Blur overlay only when collapsed */}
+    {!showAllReviews && (
+      <div className="absolute bottom-0 left-0 right-0 h-28 
+                      bg-gradient-to-t from-card/90 to-transparent 
+                      rounded-b-2xl flex items-end justify-end pr-4 pb-3">
+        <Button
+          onClick={() => setShowAllReviews(true)}
+          className="bg-black/70 border border-yellow-500 rounded-full 
+                     text-primary font-semibold px-2 py-0 text-xs 
+                     hover:bg-yellow-500 hover:text-white transition-all"
+        >
+          View More
+        </Button>
+      </div>
+    )}
+
+    {/* View Less button when expanded */}
+    {showAllReviews && (
+      <div className="flex justify-end mt-4">
+        <Button
+          onClick={() => setShowAllReviews(false)}
+          className="bg-black/70 border border-yellow-500 rounded-full 
+                     text-primary font-semibold px-2 py-0 text-xs 
+                     hover:bg-yellow-500 hover:text-white transition-all"
+        >
+          View Less
+        </Button>
+      </div>
+    )}
+  </div>
+</div>
+
+
+
+
+
 
         {/* Related */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-10 mb-8">

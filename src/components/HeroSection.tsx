@@ -19,8 +19,9 @@ const HeroSection = () => {
           alt="Luxury makeup model"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
-        <div className="absolute inset-0 bg-luxury-gradient opacity-20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 sm:from-black/70 via-black/30 sm:via-black/40 to-transparent"></div>
+<div className="absolute inset-0 bg-luxury-gradient opacity-10 sm:opacity-20"></div>
+
       </div>
 
       {/* Floating Elements */}

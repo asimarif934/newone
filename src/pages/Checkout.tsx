@@ -113,7 +113,7 @@ const Checkout = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header Section */}
-      <div className="relative h-64 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 overflow-hidden">
+      <div className="relative h-40 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 overflow-hidden">
         <div className="absolute inset-0 bg-luxury-gradient opacity-30"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40"></div>
         
@@ -190,7 +190,7 @@ const Checkout = () => {
                           value={formData.phonePrimary}
                           onChange={(e) => handleInputChange("phonePrimary", e.target.value)}
                           className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20 pl-10"
-                          placeholder="+1 (555) 123-4567"
+                          placeholder="+92 313"
                           required
                         />
                       </div>
@@ -205,7 +205,7 @@ const Checkout = () => {
                           value={formData.phoneSecondary}
                           onChange={(e) => handleInputChange("phoneSecondary", e.target.value)}
                           className="bg-input/50 border-border/50 rounded-lg focus:border-primary focus:ring-primary/20 pl-10"
-                          placeholder="+1 (555) 987-6543"
+                          placeholder="+92 3411816746"
                         />
                       </div>
                     </div>
