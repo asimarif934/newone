@@ -65,7 +65,7 @@ const ProductShowcase = () => {
                         {product.discount}
                       </Badge>
                     )}
-
+ 
                     {/* Badge (TOP-RIGHT) */}
                     {product.badge && (
                       <Badge className="absolute top-2 right-2 z-10 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-semibold shadow-md border-0">

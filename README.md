@@ -60,6 +60,31 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Features
+
+### Checkout Page
+A luxury checkout page with the following features:
+
+- **Customer Details Form**: Full name, email, phone numbers, and shipping address
+- **Delivery Information**: Fixed delivery charges (Rs. 200) with 2-day delivery
+- **Coupon System**: Apply discount codes (LUXURY20, BEAUTY15, WELCOME10)
+- **Order Summary**: Real-time calculation of subtotal, delivery charges, discounts, and grand total
+- **Luxury Design**: Consistent with the brand's premium aesthetic using gradients, shadows, and animations
+- **Responsive Layout**: Two-column grid layout (form on left, order summary on right)
+- **Form Validation**: Required field validation and proper input types
+- **Security Notice**: Payment security indicator
+- **Product Integration**: Automatically reads product details from navigation state when coming from product pages
+
+Access the checkout page at `/checkout` route.
+
+### Product Page Enhancements
+Enhanced product pages with:
+
+- **Buy Now Button**: Direct navigation to checkout with product details (id, name, price, quantity)
+- **WhatsApp Chat**: Luxury-styled WhatsApp chat button that opens customer support
+- **Quantity Selection**: Interactive quantity selector with real-time price updates
+- **Luxury Styling**: Consistent premium design with hover effects and animations
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/d258fe72-390b-4c13-868e-06785ec70145) and click on Share -> Publish.

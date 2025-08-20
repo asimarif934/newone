@@ -12,6 +12,7 @@ import {
   Leaf,
   Minus,
   Plus,
+  MessageCircle,
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -246,7 +247,7 @@ const Product = () => {
               </Badge>
             )}
 
-            <div className="flex items-center gap-3 sm:gap-4 flex-wrap !mt-3 ml-2">
+            <div className="flex items-center gap-3 sm:gap-4 flex-wrap !mt-3 ml-0">
               <p className="text-3xl sm:text-5xl font-bold text-foreground">
                 ${(Number(productData.price) * quantity).toFixed(2)}
               </p>
@@ -360,15 +361,36 @@ const Product = () => {
             </div>
 
             {/* Actions */}
-            <div className="flex justify-between items-center !mt-3">
-              <Button className="flex-1 bg-transparent border-2 border-primary text-primary 
-                               hover:bg-primary hover:text-primary-foreground text-base sm:text-lg py-3 sm:py-4 rounded-xl shadow-lg transition-all mr-3">
-                <ShoppingCart className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
-                Add to Cart
-              </Button>
-              <Button className="flex-2 bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 text-black font-bold text-base sm:text-lg py-3 px-6 sm:py-4 
-                               rounded-xl shadow-xl hover:scale-110 transition-transform">
-                Buy Now
+            <div className="space-y-4 !mt-3">
+              <div className="flex justify-between items-center">
+                <Button className="flex-1 bg-transparent border-2 border-primary text-primary 
+                                 hover:bg-primary hover:text-primary-foreground text-base sm:text-lg py-3 sm:py-4 rounded-xl shadow-lg transition-all mr-3">
+                  <ShoppingCart className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
+                  Add to Cart
+                </Button>
+                <Button 
+                  onClick={() => navigate("/checkout", {
+                    state: {
+                      productId: product.id,
+                      productName: product.name,
+                      productPrice: productData.price,
+                      quantity: quantity
+                    }
+                  })}
+                  className="flex-2 bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 text-black font-bold text-base sm:text-lg py-3 px-6 sm:py-4 
+                                 rounded-xl shadow-xl hover:scale-110 transition-transform"
+                >
+                  Buy Now
+                </Button>
+              </div>
+              
+              {/* WhatsApp Chat Button */}
+              <Button
+                onClick={() => window.open("https://wa.me/1234567890?text=Hi%20I%20need%20help%20regarding%20this%20product", "_blank")}
+                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold text-base sm:text-lg py-3 sm:py-4 rounded-xl shadow-lg hover:scale-105 transition-all flex items-center justify-center gap-2"
+              >
+                <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+                Chat on WhatsApp
               </Button>
             </div>
           </div>

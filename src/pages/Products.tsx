@@ -58,12 +58,12 @@ const Products = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <Navigation />
       {/* Hero Section */}
-      <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+      <div className="mt-5 pt-0 pb-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
             Our Premium Collection
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-6">
             Discover luxury beauty products that elevate your routine with premium quality and innovative formulas
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -86,7 +86,7 @@ const Products = () => {
       </div>
 
       {/* Products Grid */}
-      <div className="px-4 sm:px-6 lg:px-8 pb-16">
+      <div className="px-4 sm:px-6 lg:px-8 pb-8">
         <div className="max-w-7xl mx-auto">
           {filteredProducts.length === 0 ? (
             <div className="text-center py-16">
