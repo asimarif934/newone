@@ -178,28 +178,33 @@ const Navigation = ({ onAuthClick }: NavigationProps) => {
             </div>
 
                          {/* Mobile menu button */}
-             <div className="md:hidden">
-               <Button
-                 variant="ghost"
-                 size="icon"
-                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                 className="hover:text-primary transition-all duration-300 hover:bg-primary/10 focus-visible-ring"
-                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-               >
-                <div className="relative w-6 h-6">
-                  <Menu
-                    className={`h-6 w-6 absolute inset-0 transition-all duration-300 ${
-                      isMenuOpen ? "opacity-0 rotate-90 scale-75" : "opacity-100 rotate-0 scale-100"
-                    }`}
-                  />
-                  <X
-                    className={`h-6 w-6 absolute inset-0 transition-all duration-300 ${
-                      isMenuOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-75"
-                    }`}
-                  />
-                </div>
-              </Button>
-            </div>
+<div className="md:hidden">
+  <Button
+    variant="ghost"
+    size="icon"
+    onClick={() => setIsMenuOpen(!isMenuOpen)}
+    className="hover:text-primary transition-all duration-300 hover:bg-primary/10 focus-visible-ring flex items-center justify-center"
+    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+  >
+    <div className="relative flex items-center justify-center w-6 h-6">
+      <Menu
+        className={`h-6 w-6 absolute transition-all duration-300 ${
+          isMenuOpen
+            ? "opacity-0 rotate-90 scale-75"
+            : "opacity-100 rotate-0 scale-100"
+        }`}
+      />
+      <X
+        className={`h-6 w-6 absolute transition-all duration-300 ${
+          isMenuOpen
+            ? "opacity-100 rotate-0 scale-100"
+            : "opacity-0 -rotate-90 scale-75"
+        }`}
+      />
+    </div>
+  </Button>
+</div>
+
           </div>
         </div>
       </nav>
@@ -236,7 +241,7 @@ const Navigation = ({ onAuthClick }: NavigationProps) => {
                    <Button
                      variant="ghost"
                      size="icon"
-                     className="flex-1 hover:text-primary transition-all duration-300 hover:bg-primary/10 focus-visible-ring"
+                     className="flex-1 hover:text-primary border border-border/50 transition-all duration-300 hover:bg-primary/10 focus-visible-ring"
                      aria-label="Search"
                    >
                      <Search className="h-5 w-5" />
@@ -257,11 +262,11 @@ const Navigation = ({ onAuthClick }: NavigationProps) => {
                    <Button
                      variant="ghost"
                      size="icon"
-                     className="flex-1 hover:text-primary transition-all duration-300 hover:bg-primary/10 relative focus-visible-ring"
+                     className="flex-1 hover:text-primary transition-all duration-300 border border-border/50 hover:bg-primary/10 relative focus-visible-ring"
                      aria-label="Shopping bag"
                    >
                     <ShoppingBag className="h-5 w-5" />
-                    <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground  text-xs rounded-full h-5 w-5 flex items-center justify-center">
                       0
                     </span>
                   </Button>

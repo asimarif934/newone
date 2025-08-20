@@ -414,7 +414,7 @@ const Product = () => {
                  hover:bg-yellow-500 hover:text-black text-base sm:text-lg py-3 sm:py-4 px-6
                  rounded-xl shadow-lg transition-all"
     >
-      WhatsApp
+      Chats on WhatsApp
     </Button>
   </div>
 </div>

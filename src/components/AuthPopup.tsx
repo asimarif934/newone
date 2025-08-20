@@ -1,7 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { X, Mail, Lock, User, Sparkles, Gift, Truck, Tag, Star, Check, ChevronDown, Eye, EyeOff } from "lucide-react";
+import {
+  X,
+  Mail,
+  Lock,
+  User,
+  Sparkles,
+  Gift,
+  Truck,
+  Tag,
+  Star,
+  Check,
+  ChevronDown,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 import { markUserAsSignedUp, checkUserSignupStatus } from "@/utils/authUtils";
 
 interface AuthPopupProps {
@@ -26,11 +40,11 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Close popup when Escape key is pressed and handle mobile keyboard
@@ -42,7 +56,6 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
     };
 
     const handleResize = () => {
-      // Close popup on orientation change for mobile
       if (isMobile && window.innerHeight < 400) {
         onClose();
       }
@@ -50,10 +63,9 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
 
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
-      window.addEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
       document.body.style.overflow = "hidden";
-      
-      // Prevent mobile keyboard from pushing content up
+
       if (isMobile) {
         document.body.style.position = "fixed";
         document.body.style.width = "100%";
@@ -62,9 +74,9 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       document.body.style.overflow = "unset";
-      
+
       if (isMobile) {
         document.body.style.position = "";
         document.body.style.width = "";
@@ -86,12 +98,11 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
     };
 
     if (isOpen) {
-      // Delay to ensure content is rendered
       setTimeout(checkOverflow, 100);
-      window.addEventListener('resize', checkOverflow);
+      window.addEventListener("resize", checkOverflow);
     }
 
-    return () => window.removeEventListener('resize', checkOverflow);
+    return () => window.removeEventListener("resize", checkOverflow);
   }, [isOpen]);
 
   const handleScroll = () => {
@@ -106,17 +117,16 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       console.log(isLogin ? "Login" : "Signup", { email, password, name });
-      
+
       if (isLogin || !isLogin) {
         markUserAsSignedUp();
       }
-      
+
       onClose();
     } catch (error) {
       console.error("Authentication error:", error);
@@ -129,10 +139,9 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
     { text: "Get future discounts", icon: Tag },
     { text: "Free delivery", icon: Truck },
     { text: "Free gifts", icon: Gift },
-    { text: "Exclusive coupons", icon: Star }
+    { text: "Exclusive coupons", icon: Star },
   ];
 
-  // Handle form submission with loading state
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
@@ -140,16 +149,18 @@ const AuthPopup = ({ isOpen, onClose, isManualSignup = false }: AuthPopupProps) 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center !pt-20 !pb-20 p-8 sm:p-8 safe-area-top safe-area-bottom">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
-      
+
       {/* Popup Container */}
-      <div className="relative bg-card/95 backdrop-blur-md border border-primary/20 
+      <div
+        className="relative bg-card/95 backdrop-blur-md border border-primary/20 
 rounded-2xl w-full max-w-xs sm:max-w-sm mx-auto 
 shadow-xl animate-in fade-in-0 zoom-in-95 duration-300 
-max-h-[80vh] flex flex-col">
+max-h-[80vh] flex flex-col"
+      >
         {/* Close Button */}
         <Button
           variant="ghost"
@@ -162,9 +173,9 @@ max-h-[80vh] flex flex-col">
         </Button>
 
         {/* Scrollable Content */}
-        <div 
+        <div
           ref={scrollContainerRef}
-          className="flex-1 overflow-y-auto  p-4 sm:p-6 lg:p-8"
+          className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 custom-scrollbar"
           onScroll={handleScroll}
         >
           {/* Header */}
@@ -194,7 +205,10 @@ max-h-[80vh] flex flex-col">
                 {signupBenefits.map((benefit, index) => {
                   const IconComponent = benefit.icon;
                   return (
-                    <div key={index} className="flex items-center gap-2 sm:gap-3 group">
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 sm:gap-3 group"
+                    >
                       <div className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
                         <IconComponent className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary" />
                       </div>
@@ -212,7 +226,9 @@ max-h-[80vh] flex flex-col">
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             {!isLogin && (
               <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">Full Name</label>
+                <label className="text-sm font-medium text-foreground">
+                  Full Name
+                </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground/50" />
                   <Input
@@ -229,7 +245,9 @@ max-h-[80vh] flex flex-col">
             )}
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Email</label>
+              <label className="text-sm font-medium text-foreground">
+                Email
+              </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground/50" />
                 <Input
@@ -245,7 +263,9 @@ max-h-[80vh] flex flex-col">
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Password</label>
+              <label className="text-sm font-medium text-foreground">
+                Password
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground/50" />
                 <Input
@@ -274,9 +294,8 @@ max-h-[80vh] flex flex-col">
               </div>
             </div>
 
-            {/* Submit Button */}
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={isSubmitting}
               className="w-full btn-discover mt-4 sm:mt-6 h-10 sm:h-11 text-sm sm:text-base focus-visible-ring disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -285,13 +304,14 @@ max-h-[80vh] flex flex-col">
                   <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
                   {isLogin ? "Signing In..." : "Creating Account..."}
                 </div>
+              ) : isLogin ? (
+                "Sign In"
               ) : (
-                isLogin ? "Sign In" : "Create Account"
+                "Create Account"
               )}
             </Button>
           </form>
 
-          {/* Toggle Mode */}
           <div className="mt-4 sm:mt-6 text-center">
             <p className="text-sm text-foreground/70">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
@@ -304,28 +324,27 @@ max-h-[80vh] flex flex-col">
             </p>
           </div>
 
-          {/* Social Login Section */}
           <div className="mt-4 sm:mt-6 lg:mt-8">
-            {/* Divider */}
             <div className="relative my-3 sm:my-4 lg:my-6">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-border/50" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-foreground/50">Or continue with</span>
+                <span className="bg-card px-2 text-foreground/50">
+                  Or continue with
+                </span>
               </div>
             </div>
 
-            {/* Social Login Buttons */}
             <div className="space-y-2 sm:space-y-3">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full bg-background/50 border-border/50 hover:bg-background/70 transition-colors h-10 sm:h-11 text-sm sm:text-base focus-visible-ring"
               >
                 Continue with Google
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full bg-background/50 border-border/50 hover:bg-background/70 transition-colors h-10 sm:h-11 text-sm sm:text-base focus-visible-ring"
               >
                 Continue with Facebook
@@ -333,16 +352,19 @@ max-h-[80vh] flex flex-col">
             </div>
           </div>
 
-          {/* Privacy Note */}
           <p className="text-xs text-foreground/50 text-center mt-3 sm:mt-4 lg:mt-6 leading-relaxed">
             By continuing, you agree to our{" "}
-            <a href="/terms" className="text-primary hover:underline">Terms of Service</a>
-            {" "}and{" "}
-            <a href="/privacy" className="text-primary hover:underline">Privacy Policy</a>.
+            <a href="/terms" className="text-primary hover:underline">
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a href="/privacy" className="text-primary hover:underline">
+              Privacy Policy
+            </a>
+            .
           </p>
         </div>
 
-        {/* Scroll Hint Arrow */}
         {showScrollHint && (
           <div className="absolute bottom-10 sm:bottom-20 left-1/2 transform -translate-x-1/2 z-10">
             <div className="bg-primary/20 backdrop-blur-sm rounded-full p-2 animate-bounce">
@@ -351,11 +373,10 @@ max-h-[80vh] flex flex-col">
           </div>
         )}
 
-        {/* Skip Button - Mobile optimized */}
         {isMobile && (
           <div className="absolute bottom-3 right-3 z-10">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="sm"
               onClick={onClose}
               className="text-xs text-foreground/70 hover:text-primary transition-colors px-3 py-1.5 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 focus-visible-ring"
@@ -365,6 +386,23 @@ max-h-[80vh] flex flex-col">
           </div>
         )}
       </div>
+
+      {/* Custom Scrollbar CSS */}
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(255, 215, 0, 0.4);
+          border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 215, 0, 0.6);
+        }
+      `}</style>
     </div>
   );
 };

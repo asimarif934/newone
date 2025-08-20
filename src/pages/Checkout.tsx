@@ -29,6 +29,7 @@ const Checkout = () => {
     phonePrimary: "",
     phoneSecondary: "",
     street: "",
+    landmark: "",
     city: "",
     postalCode: "",
     country: "",

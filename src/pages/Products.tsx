@@ -12,7 +12,6 @@ const Products = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Read category from query params on mount and whenever it changes
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const categoryParam = params.get("category");
@@ -22,12 +21,18 @@ const Products = () => {
       setActiveFilter("all");
     }
   }, [location.search]);
+
   const [wishlist, setWishlist] = useState<number[]>([]);
+  const [cartItems, setCartItems] = useState<Product[]>([]);
 
   const toggleWishlist = (id: number) => {
     setWishlist((prev) =>
       prev.includes(id) ? prev.filter((pid) => pid !== id) : [...prev, id]
     );
+  };
+
+  const addToCart = (product: Product) => {
+    setCartItems((prev) => [...prev, product]);
   };
 
   const filteredProducts =
@@ -38,10 +43,10 @@ const Products = () => {
             product.category.toLowerCase() === activeFilter.toLowerCase()
         );
 
-  const categories = useMemo(() => [
-    "all",
-    ...Array.from(new Set(products.map((p) => p.category)))
-  ], []);
+  const categories = useMemo(
+    () => ["all", ...Array.from(new Set(products.map((p) => p.category)))],
+    []
+  );
 
   const handleFilterClick = (category: string) => {
     setActiveFilter(category);
@@ -51,12 +56,19 @@ const Products = () => {
     } else {
       params.set("category", category.toLowerCase());
     }
-    navigate({ pathname: "/products", search: params.toString() ? `?${params.toString()}` : "" }, { replace: false });
+    navigate(
+      {
+        pathname: "/products",
+        search: params.toString() ? `?${params.toString()}` : "",
+      },
+      { replace: false }
+    );
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 relative">
       <Navigation />
+
       {/* Hero Section */}
       <div className="mt-5 pt-0 pb-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
@@ -70,7 +82,11 @@ const Products = () => {
             {categories.map((category) => (
               <Badge
                 key={category}
-                variant={activeFilter.toLowerCase() === category.toLowerCase() ? "secondary" : "outline"}
+                variant={
+                  activeFilter.toLowerCase() === category.toLowerCase()
+                    ? "secondary"
+                    : "outline"
+                }
                 className={`px-4 py-2 text-sm cursor-pointer transition-all duration-300 hover:bg-primary hover:text-primary-foreground ${
                   activeFilter.toLowerCase() === category.toLowerCase()
                     ? "bg-primary text-primary-foreground shadow-lg"
@@ -111,9 +127,7 @@ const Products = () => {
 
                 return (
                   <Link to={`/products/${product.id}`} key={product.id}>
-                    <Card
-                      className="group hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2 border-border/50 rounded-2xl overflow-hidden cursor-pointer"
-                    >
+                    <Card className="group hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2 border-border/50 rounded-2xl overflow-hidden cursor-pointer">
                       <CardHeader className="relative pb-4">
                         <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-muted">
                           <img
@@ -121,13 +135,11 @@ const Products = () => {
                             alt={product.name}
                             className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
                           />
-                          {/* Discount Badge */}
                           {discount && (
                             <Badge className="absolute top-2 left-2 bg-red-500 text-white shadow-md">
                               {discount}% OFF
                             </Badge>
                           )}
-                          {/* Best Seller / Limited Edition */}
                           {product.isBestSeller && (
                             <Badge className="absolute top-2 right-2 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-semibold shadow-md border-0">
                               Best Seller
@@ -138,7 +150,6 @@ const Products = () => {
                               Limited Edition
                             </Badge>
                           )}
-                          {/* Wishlist */}
                           <button
                             onClick={(e) => {
                               e.preventDefault();
@@ -159,9 +170,13 @@ const Products = () => {
                         <div className="flex items-center gap-2 mt-2">
                           <div className="flex items-center gap-1">
                             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            <span className="text-sm font-medium">{product.rating}</span>
+                            <span className="text-sm font-medium">
+                              {product.rating}
+                            </span>
                           </div>
-                          <span className="text-sm text-muted-foreground">({product.reviews})</span>
+                          <span className="text-sm text-muted-foreground">
+                            ({product.reviews})
+                          </span>
                         </div>
                       </CardHeader>
                       <CardContent>
@@ -191,10 +206,10 @@ const Products = () => {
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
+                              addToCart(product);
                             }}
                           >
-                            <ShoppingCart className="h-4 w-4 " />
-                          
+                            <ShoppingCart className="h-4 w-4" />
                           </Button>
                         </div>
                       </CardContent>
@@ -205,6 +220,21 @@ const Products = () => {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Floating Cart Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Button
+          size="lg"
+          className="rounded-full shadow-lg bg-primary hover:bg-primary/90 relative"
+        >
+          <ShoppingCart className="h-6 w-6 text-white" />
+          {cartItems.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full">
+              {cartItems.length}
+            </span>
+          )}
+        </Button>
       </div>
     </div>
   );
