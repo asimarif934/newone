@@ -49,7 +49,7 @@ const Products = () => {
             product.category.toLowerCase() === activeFilter.toLowerCase()
         );
 
-  // Add "deals" explicitly after "all"
+  // Categories list with "deals" placed after "all"
   const categories = useMemo(() => {
     const uniqueCategories = Array.from(new Set(products.map((p) => p.category)));
     return ["all", "deals", ...uniqueCategories.filter((c) => c.toLowerCase() !== "deals")];
@@ -96,7 +96,7 @@ const Products = () => {
                 }
                 className={`px-4 py-2 text-sm cursor-pointer transition-all duration-300 hover:bg-primary hover:text-primary-foreground ${
                   activeFilter.toLowerCase() === category.toLowerCase()
-                    ? "bg-primary text-primary-foreground shadow-lg"
+                    ? "bg-gradient-to-r from-purple-400 to-pink-500 text-white font-semibold shadow-md border-0"
                     : "hover:scale-105"
                 }`}
                 onClick={() => handleFilterClick(category)}
