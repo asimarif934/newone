@@ -96,7 +96,7 @@ const Products = () => {
                 }
                 className={`px-4 py-2 text-sm cursor-pointer transition-all duration-300 hover:bg-primary hover:text-primary-foreground ${
                   activeFilter.toLowerCase() === category.toLowerCase()
-                    ? "bg-gradient-to-r from-purple-400 to-pink-500 text-white font-semibold shadow-md border-0"
+                    ? "bg-primary text-primary-foreground shadow-lg"
                     : "hover:scale-105"
                 }`}
                 onClick={() => handleFilterClick(category)}
